@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   Container,
   UserContainer,
+  UserIconCompany,
   UserIconContent,
   UserIcons,
   UserTitleContent,
 } from './styles'
 
 import api from '../../../../lib/axios'
+
 import { dataUserGitProps } from '../../../../@types/global-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -23,7 +25,8 @@ export function UserProfile() {
 
   const fetchDataUser = useCallback(async () => {
     const userJson = await api.getUserInfo('matheusdamata')
-    console.log(userJson)
+    const json = await api.getIssues()
+    console.log(json)
     seDataUserGit(() => userJson)
   }, [])
 
@@ -51,7 +54,11 @@ export function UserProfile() {
 
           <UserIconContent>
             <FontAwesomeIcon icon={faBuilding} fontSize={18} />
-            <span>{dataUserGit?.company}</span>
+            {dataUserGit?.company ? (
+              <UserIconCompany>{dataUserGit?.company}</UserIconCompany>
+            ) : (
+              <UserIconCompany isCompany={false}>Not Available</UserIconCompany>
+            )}
           </UserIconContent>
 
           <UserIconContent>

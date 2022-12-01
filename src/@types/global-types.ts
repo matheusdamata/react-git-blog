@@ -9,6 +9,7 @@ export type dataUserGitProps = {
 }
 
 export type repoIssues = {
+  id: number
   title: string
   body: string
   created_at: string
