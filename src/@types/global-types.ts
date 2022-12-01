@@ -15,4 +15,5 @@ export type repoIssues = {
   created_at: string
   comments: number
   html_url: string
+  number: number
 }

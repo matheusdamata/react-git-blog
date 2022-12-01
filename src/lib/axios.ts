@@ -9,6 +9,12 @@ export default {
     )
     return response.data
   },
+  getIssue: async (number: number) => {
+    const response = await axios.get(
+      `${BASE_URL}/repos/matheusdamata/react-git-blog/issues/${number}`,
+    )
+    return response.data
+  },
   getUserInfo: async (name: string) => {
     const response = await axios.get(`${BASE_URL}/users/${name}`)
     return response.data
