@@ -50,7 +50,7 @@ export const IssuesContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 
-  margin-top: 3rem;
+  margin: 3rem 0 3rem;
 `
 
 export const IssueContent = styled.div`
@@ -68,6 +68,7 @@ export const IssueContent = styled.div`
   }
 
   h1 {
+    width: 70%;
     font-size: 1.25rem;
   }
 

@@ -9,7 +9,7 @@ export const Container = styled.div`
   width: 54rem;
   height: 13.25rem;
 
-  margin-top: -6%;
+  margin-top: -13%;
 
   border-radius: 10px;
 
@@ -31,6 +31,7 @@ export const UserTitleContent = styled.div`
   justify-content: space-between;
 
   a {
+    font-size: 0.75rem;
     text-decoration: none;
     color: ${(props) => props.theme.blue};
 

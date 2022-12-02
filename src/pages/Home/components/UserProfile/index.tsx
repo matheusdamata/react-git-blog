@@ -42,7 +42,7 @@ export function UserProfile() {
           <h1>{dataUserGit?.name}</h1>
           <a href={dataUserGit?.html_url} target="_blank" rel="noreferrer">
             GITHUB
-            <FontAwesomeIcon icon={faArrowUpRightFromSquare} fontSize={16} />
+            <FontAwesomeIcon icon={faArrowUpRightFromSquare} fontSize={14} />
           </a>
         </UserTitleContent>
         <p>{dataUserGit?.bio}</p>

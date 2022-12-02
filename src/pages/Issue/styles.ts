@@ -95,4 +95,6 @@ export const UserIconContent = styled.div`
 
 export const BodyIssue = styled.p`
   margin-top: 2.5rem;
+
+  color: ${(props) => props.theme['base-text']};
 `
