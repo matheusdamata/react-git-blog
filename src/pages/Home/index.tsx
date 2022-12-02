@@ -29,7 +29,7 @@ type SearchFormInputs = z.infer<typeof searchFormSchema>
 export function Home() {
   const [search, setSearch] = useState('')
 
-  const { register, handleSubmit } = useForm<SearchFormInputs>({
+  const { register } = useForm<SearchFormInputs>({
     resolver: zodResolver(searchFormSchema),
   })
 
@@ -39,7 +39,6 @@ export function Home() {
 
   const fetchDataUser = useCallback(async () => {
     const json = await api.getIssues()
-    console.log(json)
     setRepoIssues(() => json)
   }, [])
 
@@ -47,22 +46,11 @@ export function Home() {
     fetchDataUser()
   }, [fetchDataUser])
 
-  async function handleFecthSearchIssue(
-    name?: string,
-    // data: SearchFormInputs,
-  ) {
-    const response = await api.getSearchIssue('matheusdamata', search)
-    setRepoIssues(() => response)
-    console.log(response)
-  }
-
   function handleOpenIssue(number: number, data: repoIssues) {
     navigate(`/issue/${number}`, {
       state: data,
     })
   }
-
-  console.log(search)
 
   return (
     <Container>
@@ -83,23 +71,29 @@ export function Home() {
       </SearchContainer>
 
       <IssuesContainer>
-        {repoIssues.map((issue) => (
-          <IssueContent
-            key={issue?.id}
-            onClick={() => handleOpenIssue(issue?.number, issue)}
-          >
-            <IssueTitle>
-              <h1>{issue?.title}</h1>
-              <span>
-                {formatDistanceToNow(new Date(issue?.created_at), {
-                  addSuffix: true,
-                  locale: ptBR,
-                })}
-              </span>
-            </IssueTitle>
-            <p>{issue?.body}</p>
-          </IssueContent>
-        ))}
+        {repoIssues
+          .filter((issue) =>
+            search === ''
+              ? issue
+              : issue.title.toLowerCase().includes(search.toLowerCase()),
+          )
+          .map((issue) => (
+            <IssueContent
+              key={issue?.id}
+              onClick={() => handleOpenIssue(issue?.number, issue)}
+            >
+              <IssueTitle>
+                <h1>{issue?.title}</h1>
+                <span>
+                  {formatDistanceToNow(new Date(issue?.created_at), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
+                </span>
+              </IssueTitle>
+              <p>{issue?.body}</p>
+            </IssueContent>
+          ))}
       </IssuesContainer>
     </Container>
   )
