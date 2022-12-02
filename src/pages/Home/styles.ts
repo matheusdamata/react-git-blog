@@ -7,7 +7,7 @@ export const Container = styled.main`
   width: 54rem;
 `
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.form`
   display: flex;
   flex-direction: column;
 

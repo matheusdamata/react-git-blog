@@ -16,4 +16,7 @@ export type repoIssues = {
   comments: number
   html_url: string
   number: number
+  user: {
+    login: string
+  }
 }

@@ -15,6 +15,20 @@ export default {
     )
     return response.data
   },
+  getSearchIssue: async (name: string, query: string) => {
+    const response = await axios.get(
+      `${BASE_URL}/search/issues?q=${query}%20repo:${name}/react-git-blog`,
+      {
+        params: {
+          _sort: 'createdAt',
+          _order: 'desc',
+          q: query,
+        },
+      },
+    )
+
+    return response.data
+  },
   getUserInfo: async (name: string) => {
     const response = await axios.get(`${BASE_URL}/users/${name}`)
     return response.data

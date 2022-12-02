@@ -9,6 +9,10 @@ import {
   SearchTitleContent,
 } from './styles'
 
+import * as z from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import api from '../../lib/axios'
 
 import { repoIssues } from '../../@types/global-types'
@@ -16,7 +20,19 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useNavigate } from 'react-router-dom'
 
+const searchFormSchema = z.object({
+  query: z.string(),
+})
+
+type SearchFormInputs = z.infer<typeof searchFormSchema>
+
 export function Home() {
+  const [search, setSearch] = useState('')
+
+  const { register, handleSubmit } = useForm<SearchFormInputs>({
+    resolver: zodResolver(searchFormSchema),
+  })
+
   const [repoIssues, setRepoIssues] = useState<repoIssues[]>([])
 
   const navigate = useNavigate()
@@ -31,11 +47,22 @@ export function Home() {
     fetchDataUser()
   }, [fetchDataUser])
 
+  async function handleFecthSearchIssue(
+    name?: string,
+    // data: SearchFormInputs,
+  ) {
+    const response = await api.getSearchIssue('matheusdamata', search)
+    setRepoIssues(() => response)
+    console.log(response)
+  }
+
   function handleOpenIssue(number: number, data: repoIssues) {
     navigate(`/issue/${number}`, {
       state: data,
     })
   }
+
+  console.log(search)
 
   return (
     <Container>
@@ -46,7 +73,13 @@ export function Home() {
           <strong>Publicações</strong>
           <span>{repoIssues?.length} publicações</span>
         </SearchTitleContent>
-        <input type="text" placeholder="Buscar conteúdo" />
+        <input
+          type="text"
+          placeholder="Buscar conteúdo"
+          {...register('query')}
+          onChange={(event) => setSearch(() => event.target.value)}
+          value={search}
+        />
       </SearchContainer>
 
       <IssuesContainer>
